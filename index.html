@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Baby Duty — Form 4 Social Studies</title>
+<style>
+:root{--bg:#f5f5f2;--card:#fff;--text:#202124;--muted:#667085;--line:#ddd;--accent:#222;--soft:#efefec;--good:#eaf5ec;--warn:#fff4df}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:760px;margin:auto;padding:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.hero{display:flex;gap:14px;align-items:center}.face{font-size:48px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+h1{font-size:25px;margin:2px 0}h2{font-size:19px;margin:0 0 10px}p{line-height:1.45}.muted{color:var(--muted);font-size:14px}
+label{font-weight:700;font-size:14px;display:block;margin:14px 0 5px}input,textarea{width:100%;font-size:16px;border:1px solid #bbb;border-radius:12px;padding:13px;background:#fff}
+button{width:100%;font-size:16px;font-weight:700;border:1px solid #bbb;border-radius:12px;padding:13px;margin-top:9px;background:#fff;color:var(--text);cursor:pointer}
+.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button:disabled{opacity:.5}.hidden{display:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.stat{border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center}.stat small{display:block;color:var(--muted);font-size:11px}.stat b{font-size:16px}
+.scene{background:var(--soft);border-radius:14px;padding:17px;min-height:155px}.choice{text-align:left}
+.logitem{border-left:3px solid #aaa;padding-left:10px;margin:10px 0}.result{background:var(--good);padding:14px;border-radius:13px}.reflection{margin-top:14px}
+.badge{display:inline-block;background:var(--soft);border-radius:99px;padding:5px 9px;font-size:12px;margin:3px 2px}
+@media(max-width:440px){.wrap{padding:10px}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:22px}}
+@media print{body{background:#fff}.no-print{display:none!important}.wrap{max-width:none}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="card">
+ <div class="hero"><div id="face" class="face">👶</div><div><div class="eyebrow">FORM 4 SOCIAL STUDIES</div><h1>Baby Duty</h1><div class="muted">The Parenting Challenge</div></div></div>
+ <div id="setup">
+  <p>You are responsible for a virtual baby for one simulated day. You begin with <b>TT$500</b>. Your choices affect your money, stress and ability to meet your baby's needs.</p>
+  <label for="student">Student name</label><input id="student" autocomplete="name" placeholder="Enter your name">
+  <label for="baby">Name your virtual baby</label><input id="baby" placeholder="Enter baby's name">
+  <p id="validation" class="muted">Complete the challenge yourself. There will not always be a perfect choice.</p>
+  <button id="start" class="primary">Start my day as a parent</button>
+ </div>
+ <div id="game" class="hidden">
+  <div class="stats">
+   <div class="stat"><small>TIME</small><b id="time">7:00 AM</b></div>
+   <div class="stat"><small>MONEY</small><b id="money">TT$500</b></div>
+   <div class="stat"><small>CARE</small><b id="care">80</b></div>
+   <div class="stat"><small>STRESS</small><b id="stress">10</b></div>
+  </div>
+  <div id="scene" class="scene"></div>
+  <div id="choices"></div>
+ </div>
+</section>
+
+<section id="learning" class="card">
+ <h2>What are you learning?</h2>
+ <span class="badge">Family roles</span><span class="badge">Responsibilities</span><span class="badge">Needs vs wants</span><span class="badge">Decision-making</span><span class="badge">Support systems</span>
+ <p class="muted">Notice how caring for a dependent child can affect time, education, money, social life and other family responsibilities.</p>
+</section>
+
+<section id="logcard" class="card hidden">
+ <h2>Your Parenting Day 📋</h2><div id="who" class="muted"></div><div id="log"></div>
+</section>
+
+<section id="report" class="card hidden">
+ <h2>End-of-Day Social Studies Report</h2>
+ <div id="summary"></div>
+ <div class="reflection">
+  <h2>Reflection — 15 marks</h2>
+  <p class="muted">Answer in complete sentences. Each question is worth 3 marks.</p>
+  <label>1. Identify three responsibilities you had as a parent.</label><textarea rows="3"></textarea>
+  <label>2. Describe one occasion when your baby's needs had to come before your wants.</label><textarea rows="3"></textarea>
+  <label>3. Explain how parenthood affected your money, time or education.</label><textarea rows="3"></textarea>
+  <label>4. Give one example from the simulation showing why a family or support system can be important.</label><textarea rows="3"></textarea>
+  <label>5. What did this activity teach you about the responsibilities involved in raising a child?</label><textarea rows="3"></textarea>
+ </div>
+ <div class="card" style="margin-top:15px;background:var(--soft)">
+  <b>Submission</b>
+  <p class="muted">When you have completed the five questions, take screenshots of this report and your answers as instructed by your teacher.</p>
+ </div>
+ <button class="primary no-print" onclick="window.print()">Print / Save report</button>
+</section>
+</main>
+<script>
+const scenes=[
+{t:"7:00 AM",i:"😭",title:"The day starts early",text:"Your baby wakes crying just as you are getting ready for school. You have an important test first period.",o:[
+["Stop and care for the baby",0,6,10,"You meet your baby's immediate need, but now you have less time to get ready."],
+["Ignore the baby and concentrate on school",0,-16,4,"Your education matters, but your baby still depends on you for care."],
+["Ask a responsible family member for help",0,3,3,"A support system helps you balance two important responsibilities."]]},
+{t:"8:00 AM",i:"☎️",title:"Childcare problem",text:"The person who normally watches your baby is unavailable. You cannot leave an infant alone.",o:[
+["Miss school and care for the baby",0,5,15,"The baby is supervised, but your education is affected."],
+["Pay TT$150 for suitable childcare",-150,5,5,"You can attend school, but childcare takes a large part of your money."],
+["Leave the baby alone",0,-35,12,"A dependent infant requires appropriate supervision."]]},
+{t:"10:30 AM",i:"🧷",title:"You need supplies",text:"You need diapers costing TT$90. You also wanted to spend TT$100 on something for yourself.",o:[
+["Buy the diapers",-90,7,4,"You put an essential need of the child before your own want."],
+["Buy what you want instead",-100,-22,2,"Your want is satisfied, but the baby's essential need remains unmet."],
+["Ask a relative for financial help",0,2,8,"Family assistance may help, although depending on others can create additional pressure."]]},
+{t:"1:00 PM",i:"🍼",title:"Feeding time",text:"Your baby needs feeding supplies costing TT$80. Your money is disappearing faster than you expected.",o:[
+["Buy what the baby needs",-80,8,6,"Providing food is a basic parental responsibility."],
+["Skip it to save money",0,-28,10,"Saving money cannot come before a dependent child's basic nutritional needs."],
+["Seek appropriate family assistance",0,3,8,"Your support network helps, but you remain responsible for your child."]]},
+{t:"4:00 PM",i:"🏏",title:"Your friends are going out",text:"Your friends invite you out after school. You have responsibility for your baby and no childcare arranged.",o:[
+["Stay with the baby",0,7,12,"You give up some social freedom because the baby needs supervision."],
+["Leave the baby alone and go",0,-35,3,"Personal plans cannot take priority over a dependent child's safety."],
+["Ask a responsible relative to babysit",0,4,5,"Appropriate family support can help parents balance responsibilities."]]},
+{t:"6:30 PM",i:"📚",title:"Too much to do",text:"You have homework and chores. The baby is crying and you are tired.",o:[
+["Care for baby, then do the other tasks",0,8,15,"You address the immediate need, but your own workload remains."],
+["Do homework and ignore the baby",0,-20,7,"Schoolwork matters, but the baby's needs cannot simply be switched off."],
+["Ask for temporary help while you finish one task",0,4,7,"Sharing responsibilities appropriately can reduce pressure."]]},
+{t:"8:00 PM",i:"🌡️",title:"An unexpected problem",text:"Your baby seems unwell. Appropriate assessment and transportation will cost about TT$120.",o:[
+["Seek appropriate care",-120,10,15,"The expense hurts your budget, but health and safety take priority."],
+["Wait only because you want to save money",0,-28,10,"Financial pressure is real, but necessary care cannot be ignored simply to save money."],
+["Seek help from a responsible support person",-60,7,9,"Support reduces some of the burden while the child's needs are addressed."]]},
+{t:"10:00 PM",i:"😴",title:"You thought the day was over",text:"You are exhausted and ready to sleep. Your baby wakes and needs attention again.",o:[
+["Get up and respond",0,8,18,"Parenting responsibilities continue even when you are tired."],
+["Ignore the baby completely",0,-24,2,"A dependent child's needs do not stop because a parent is tired."],
+["Ask for appropriate help if available",0,4,8,"Support can help, although responsibility for the child remains."]]}
+];
+let idx=0,money=500,care=80,stress=10,name="",baby="";
+const $=id=>document.getElementById(id);
+$("start").addEventListener("click",()=>{
+ name=$("student").value.trim(); baby=$("baby").value.trim();
+ if(!name||!baby){$("validation").textContent="Enter both your name and your baby's name.";return;}
+ $("setup").classList.add("hidden"); $("game").classList.remove("hidden"); $("logcard").classList.remove("hidden");
+ $("who").textContent=name+" • Parent of "+baby; render();
+});
+function render(){
+ if(idx>=scenes.length){finish();return;}
+ const s=scenes[idx]; $("time").textContent=s.t; $("face").textContent=s.i;
+ $("scene").innerHTML="<div class='eyebrow'>"+s.t+"</div><h2>"+s.title+"</h2><p>"+s.text+"</p>";
+ $("choices").innerHTML="";
+ s.o.forEach(o=>{const b=document.createElement("button");b.className="choice";b.textContent=o[0];b.addEventListener("click",()=>choose(s,o));$("choices").appendChild(b);});
+}
+function choose(s,o){
+ money=Math.max(0,money+o[1]); care=Math.max(0,Math.min(100,care+o[2])); stress=Math.max(0,Math.min(100,stress+o[3]));
+ $("money").textContent="TT$"+money;$("care").textContent=care;$("stress").textContent=stress;
+ const d=document.createElement("div");d.className="logitem";d.innerHTML="<b>"+s.t+" — "+s.title+"</b><br><span class='muted'>"+o[0]+"</span>";$("log").appendChild(d);
+ $("scene").innerHTML="<h2>Consequence</h2><p>"+o[4]+"</p><p class='muted'>Money: TT$"+money+" • Care: "+care+" • Stress: "+stress+"</p>";
+ $("choices").innerHTML="";const n=document.createElement("button");n.className="primary";n.textContent=idx===scenes.length-1?"Finish the day":"Continue";n.addEventListener("click",()=>{idx++;render();});$("choices").appendChild(n);
+}
+function finish(){
+ $("game").classList.add("hidden");$("report").classList.remove("hidden");$("face").textContent="🏁";
+ const spent=500-money;
+ $("summary").innerHTML="<div class='result'><b>"+name+" — Parent of "+baby+"</b><p>Money used: <b>TT$"+spent+"</b><br>Money remaining: <b>TT$"+money+"</b><br>Care score: <b>"+care+"/100</b><br>Stress level: <b>"+stress+"/100</b></p><p><b>Important:</b> These numbers are part of the simulation. They do not label anyone a good or bad parent. Use your decisions to think about the real responsibilities and pressures families may face.</p></div>";
+ $("report").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
